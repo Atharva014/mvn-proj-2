@@ -27,4 +27,17 @@ pipeline {
             }
         }
     }
+
+    stage('SonarQube Analysis') {
+        environment {
+            // Tool name must match with Jenkins Tools for Sonar Scanner - Manage Jenkins >> Tools
+            scannerHome = tool 'sonar-scanner'
+        }
+        steps {
+            // Env value must match with the Sonar Server Name - Manage Jenkins >> System
+            withSonarQubeEnv('sonarqube-srv') {
+              sh "${scannerHome}/bin/sonar-scanner"
+            }
+        }
+    }
 }
